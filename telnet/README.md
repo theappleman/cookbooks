@@ -1,0 +1,1 @@
+This cookbook installs "telnet"

@@ -17,7 +17,11 @@ Cookbooks
 ---------
 
 apache2 - installs and runs apache2, configures it to listen on port [::1]:8080
+curl - installs the curl cli tool
 htop - installs htop
 nginx - installs and runs nginx
+nmap - installs nmap
+tcpdump - installs tcpdump
+telnet - installs telnet (telnet-bsd on gentoo)
 varnish - installs and runs varnish, configured to listen on [::]:80
 vim - install vim
