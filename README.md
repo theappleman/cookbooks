@@ -12,6 +12,8 @@ Scripts
 bootstrap/ - contains bootstrap scripts suitable for 'knife bootstrap --distro'
 newpkg.sh - create a new cookbook that installs a package
 files.sh - macro to create cookbook\_file entries in a folder
+cs.sh - Create (Cloud) Server and bootstrap it
+clear.sh - removes nodes created from cs.sh from cloud operator and chef
 
 Cookbooks
 ---------
