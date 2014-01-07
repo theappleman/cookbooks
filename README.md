@@ -17,7 +17,9 @@ Cookbooks
 ---------
 
 apache2 - installs and runs apache2, configures it to listen on port [::1]:8080
+btrfs-progs - installs btrfs userland programs/tools
 curl - installs the curl cli tool
+glusterfs - installs glusterfs server
 htop - installs htop
 nginx - installs and runs nginx
 nmap - installs nmap
