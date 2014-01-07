@@ -1,0 +1,17 @@
+{
+  "name": "webserver",
+  "description": "Web servers",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+    "recipe[nginx]",
+    "recipe[apache2]",
+    "recipe[varnish]"
+  ],
+  "env_run_lists": {
+  }
+}

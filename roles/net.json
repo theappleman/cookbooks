@@ -1,0 +1,19 @@
+{
+  "name": "net",
+  "description": "Networking test/inspection tools",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+    "role[interactive]",
+    "recipe[nmap]",
+    "recipe[tcpdump]",
+    "recipe[telnet]",
+    "recipe[curl]"
+  ],
+  "env_run_lists": {
+  }
+}
