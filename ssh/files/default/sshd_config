@@ -1,0 +1,12 @@
+AllowGroups root users sftponly
+Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+LogLevel FATAL
+MACs hmac-sha1,hmac-ripemd160
+PasswordAuthentication no
+PermitRootLogin without-password
+Subsystem sftp internal-sftp
+UsePAM yes
+
+Match Group sftponly
+	ChrootDirectory %h
+	ForceCommand internal-sftp

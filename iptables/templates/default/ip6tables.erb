@@ -1,0 +1,28 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:TCP - [0:0]
+:UDP - [0:0]
+:ICMP6 - [0:0]
+[0:0] -A INPUT -i lo -j ACCEPT
+[0:0] -A INPUT -m conntrack --ctstate INVALID -j DROP
+[0:0] -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+<% @icmp.each do |port| -%>
+[0:0] -A ICMP6 -p ipv6-icmp -m icmp6 --icmpv6-type <%= port %> -j ACCEPT
+<% end -%>
+[0:0] -A INPUT -p ipv6-icmp -j ICMP6
+[0:0] -A INPUT -p udp -m conntrack --ctstate NEW -j UDP
+[0:0] -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j TCP
+[0:0] -A INPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
+[0:0] -A INPUT -p tcp -j REJECT --reject-with tcp-reset
+[0:0] -A INPUT -j REJECT --reject-with icmp6-port-unreachable
+[0:0] -A TCP -p tcp -m tcp --dport 22 -m recent --set --name ssh --rsource
+[0:0] -A TCP -p tcp -m tcp --dport 22 -m recent ! --rcheck --seconds 60 --hitcount 4 --name ssh --rsource -j ACCEPT
+<% @tcp.each do |port| -%>
+[0:0] -A TCP -p tcp -m tcp --dport <%= port %> -j ACCEPT
+<% end -%>
+<% @udp.each do |port| -%>
+[0:0] -A UDP -p udp -m udp --dport <%= port %> -j ACCEPT
+<% end -%>
+COMMIT
