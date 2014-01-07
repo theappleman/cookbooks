@@ -1,0 +1,10 @@
+server {
+        listen                  [::]:443                ssl;
+        server_name             example.com;
+        ssl_certificate         /etc/nginx/ssl/2014-example.com.crt;
+        ssl_certificate_key     /etc/nginx/ssl/2014-example.com.key;
+
+        location / {
+                proxy_pass      http://backend;
+        }
+}

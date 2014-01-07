@@ -1,0 +1,10 @@
+KeepAlive Off
+Timeout 10
+
+ExpiresActive On
+ExpiresByType image/jpeg "access plus 24 hour"
+ExpiresByType image/gif "access plus 24 hour"
+ExpiresByType image/png "access plus 24 hour"
+ExpiresByType application/x-shockwave-flash "access plus 24 hour"
+ExpiresByType application/x-javascript "access plus 8 hour"
+ExpiresByType text/css "access plus 8 hour"

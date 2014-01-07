@@ -1,0 +1,5 @@
+<IfModule mod_headers.so>
+Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
+Header always append X-Frame-Options SAMEORIGIN
+Header set X-XSS-Protection "1; mode=block"
+</IfModule>

@@ -1,0 +1,6 @@
+<VirtualHost [::1]:8080>
+        ServerName example.com
+        DocumentRoot /var/www/vhosts/example.com
+        ErrorLog ${APACHE_LOG_DIR}/example.com-error.log
+        CustomLog ${APACHE_LOG_DIR}/example.com-access.log forwarded
+</VirtualHost>
