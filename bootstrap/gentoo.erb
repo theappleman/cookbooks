@@ -1,0 +1,49 @@
+<%= "export http_proxy=\"#{knife_config[:bootstrap_proxy]}\"" if knife_config[:bootstrap_proxy] -%>
+
+export RUBY_TARGETS=ruby19
+
+emerge -qu =dev-ruby/json-1.8.0 =dev-ruby/rubygems-1.8.24
+
+emerge -qu chef --autounmask-write || (
+	etc-update --automode -5 /etc/portage
+	emerge -qu chef
+)
+
+sed -i -e '/config_/a\
+  noop' /etc/conf.d/net
+
+awk NF > /etc/chef/validation.pem <<'EOP'
+<%= validation_key %>
+EOP
+chmod 0600 /etc/chef/validation.pem
+
+<% if @chef_config[:encrypted_data_bag_secret] -%>
+	awk NF > /etc/chef/encrypted_data_bag_secret <<'EOP'
+	<%= encrypted_data_bag_secret %>
+	EOP
+	chmod 0600 /etc/chef/encrypted_data_bag_secret
+<% end -%>
+<%# Generate Ohai Hints -%>
+<% unless @chef_config[:knife][:hints].nil? || @chef_config[:knife][:hints].empty? -%>
+	mkdir -p /etc/chef/ohai/hints
+
+	<% @chef_config[:knife][:hints].each do |name, hash| -%>
+		cat > /etc/chef/ohai/hints/<%= name %>.json <<'EOP'
+		<%= hash.to_json %>
+		EOP
+	<% end -%>
+<% end -%>
+
+cat > /etc/chef/client.rb <<'EOP'
+<%= config_content %>
+EOP
+
+cat > /etc/chef/first-boot.json <<'EOP'
+<%= first_boot.to_json %>
+EOP
+
+sed -i -e 's:STDOUT:"/var/log/chef/client.log":' /etc/chef/client.rb
+
+<%= start_chef %>
+
+rc-service chef-client start
