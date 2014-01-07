@@ -10,3 +10,4 @@ Scripts
 -------
 
 bootstrap/ - contains bootstrap scripts suitable for 'knife bootstrap --distro'
+newpkg.sh - create a new cookbook that installs a package
